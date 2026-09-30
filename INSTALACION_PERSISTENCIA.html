@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANO ROBÓTICA // Guía de Instalación</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff88;
+            padding: 40px;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            border: 2px solid #00ff88;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h1 { margin: 0; color: #00ffff; }
+        h2 { color: #ffff00; margin-top: 30px; }
+        .code-block {
+            background: #1a1f3a;
+            border-left: 4px solid #00ff88;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .success { color: #00ff88; }
+        .warning { color: #ffaa00; }
+        .error { color: #ff0055; }
+        .step {
+            background: #1a1f3a;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #00ff88;
+        }
+        .checkmark { color: #00ff88; }
+        ul { padding-left: 20px; }
+        li { margin: 8px 0; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>⚙️ INSTALACIÓN DEL MÓDULO DE PERSISTENCIA DE CONEXIÓN</h1>
+    <p>v2.0 - Seguro, Modular y Funcional</p>
+</div>
+
+<h2>📋 ARCHIVOS NUEVOS CREADOS</h2>
+
+<p>Se han creado dos archivos en la carpeta <code>modulos/</code>:</p>
+
+<div class="step">
+    <h3>✅ 1. modulos/gestor-conexion.js</h3>
+    <p><strong>Función:</strong> Gestiona el estado de conexión de forma centralizada</p>
+    <ul>
+        <li>Guarda estado en sessionStorage</li>
+        <li>Restaura conexión entre páginas</li>
+        <li>Sincroniza con el contexto global</li>
+        <li>Actualiza todos los indicadores visuales</li>
+        <li>NO modifica código existente</li>
+    </ul>
+</div>
+
+<div class="step">
+    <h3>✅ 2. modulos/integracion-conexion.js</h3>
+    <p><strong>Función:</strong> Conecta gestor-conexion.js con scrips.js mediante hooks</p>
+    <ul>
+        <li>Intercepta llamadas a conectarArduino()</li>
+        <li>Intercepta llamadas a desconectarArduino()</li>
+        <li>Monitorea cambios en contexto.conectado</li>
+        <li>Restaura conexión automáticamente al navegar</li>
+        <li>NO modifica scrips.js original</li>
+    </ul>
+</div>
+
+<h2>🚀 INSTALACIÓN EN TOAS LAS PÁGINAS HTML</h2>
+
+<p>Agrega estos dos scripts en el <code>&lt;head&gt;</code> de TODAS tus páginas HTML, <strong>ANTES</strong> de cargar scrips.js:</p>
+
+<div class="code-block">
+&lt;!-- Módulos de conexión persistente --&gt;
+&lt;script src="modulos/gestor-conexion.js" defer&gt;&lt;/script&gt;
+&lt;script src="modulos/integracion-conexion.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- Después de esto, carga el script principal --&gt;
+&lt;script src="scrips.js" defer&gt;&lt;/script&gt;
+</div>
+
+<h3>Archivos a MODIFICAR (agregar los scripts):</h3>
+
+<ul>
+    <li>✏️ <strong>index.html</strong></li>
+    <li>✏️ <strong>botones.html</strong></li>
+    <li>✏️ <strong>conexion.html</strong></li>
+    <li>✏️ <strong>monitor.html</strong></li>
+    <li>✏️ <strong>audio.html</strong></li>
+    <li>✏️ <strong>comandos.html</strong></li>
+    <li>✏️ <strong>secuencias.html</strong></li>
+    <li>✏️ <strong>ia.html</strong></li>
+    <li>✏️ <strong>configuracion.html</strong></li>
+</ul>
+
+<h2>📝 EJEMPLO DE INSTALACIÓN EN UN HTML</h2>
+
+<div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;MANO ROBÓTICA&lt;/title&gt;
+    
+    &lt;!-- Estilos --&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+    
+    &lt;!-- AGREGAR ESTOS SCRIPTS NUEVOS AQUÍ --&gt;
+    &lt;script src="modulos/gestor-conexion.js" defer&gt;&lt;/script&gt;
+    &lt;script src="modulos/integracion-conexion.js" defer&gt;&lt;/script&gt;
+    
+    &lt;!-- Script principal (DESPUÉS de los nuevos) --&gt;
+    &lt;script src="scrips.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Tu contenido HTML --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</div>
+
+<h2>🔍 CÓMO FUNCIONA</h2>
+
+<div class="step">
+    <h3>Flujo de Conexión:</h3>
+    <ol>
+        <li>Usuario conecta la mano en cualquier página</li>
+        <li><code>conectarArduino()</code> se ejecuta</li>
+        <li><code>integracion-conexion.js</code> captura el evento</li>
+        <li><code>gestorConexion.marcarConectado()</code> guarda en sessionStorage</li>
+        <li>Usuario navega a otra página</li>
+        <li>Los scripts nuevos se cargan primero</li>
+        <li><code>gestorConexion</code> restaura el estado desde sessionStorage</li>
+        <li>Todos los indicadores se actualizan automáticamente</li>
+        <li>Si hay puerto disponible, intenta reconectar</li>
+    </ol>
+</div>
+
+<h2>✨ CARACTERÍSTICAS</h2>
+
+<ul>
+    <li><span class="checkmark">✓</span> <strong>Persistencia:</strong> Estado se mantiene entre páginas</li>
+    <li><span class="checkmark">✓</span> <strong>Sincronización:</strong> Actualiza todos los indicadores en tiempo real</li>
+    <li><span class="checkmark">✓</span> <strong>Seguridad:</strong> No modifica código existente</li>
+    <li><span class="checkmark">✓</span> <strong>Modularidad:</strong> Fácil de mantener y extender</li>
+    <li><span class="checkmark">✓</span> <strong>Timeout:</strong> Limpia sesión después de 30 minutos sin actividad</li>
+    <li><span class="checkmark">✓</span> <strong>Reconexión automática:</strong> Intenta restaurar puerto al cambiar de página</li>
+    <li><span class="checkmark">✓</span> <strong>Eventos personalizados:</strong> Dispara eventos para extensibilidad</li>
+</ul>
+
+<h2>🧪 PRUEBAS</h2>
+
+<div class="step">
+    <h3>Para verificar que funciona:</h3>
+    
+    <p><strong>1. Abre la consola del navegador (F12)</strong></p>
+    
+    <p><strong>2. En cualquier página, conecta la mano robótica</strong></p>
+    
+    <p><strong>3. Deberías ver en consola:</strong></p>
+    <div class="code-block">
+[CONEXIÓN] ✅ Marcado como CONECTADO
+[CONEXIÓN] Estado guardado: {...}
+[CONEXIÓN] Visual actualizado: ONLINE
+    </div>
+    
+    <p><strong>4. Navega a otra página (ej: Botones, Monitor, etc.)</strong></p>
+    
+    <p><strong>5. Deberías ver en consola:</strong></p>
+    <div class="code-block">
+[CONEXIÓN] Estado recuperado del almacenamiento
+[INTEGRACIÓN] Página cargada, verificando conexión persistente...
+[INTEGRACIÓN] ✅ Restaurando conexión desde almacenamiento
+    </div>
+    
+    <p><strong>6. Verifica los indicadores:</strong></p>
+    <ul>
+        <li>El badge "LINK" debe estar en <span class="success">ONLINE</span></li>
+        <li>El pulso de enlace debe estar <span class="success">activo (verde)</span></li>
+        <li>Botón "Conectar" debe estar <span class="warning">deshabilitado</span></li>
+        <li>Botón "Desconectar" debe estar <span class="checkmark">habilitado</span></li>
+    </ul>
+</div>
+
+<h2>🔧 COMANDOS ÚTILES EN CONSOLA</h2>
+
+<div class="code-block">
+// Ver estado actual
+gestorConexion.obtenerInfo()
+
+// Marcar como conectado manualmente
+gestorConexion.marcarConectado()
+
+// Marcar como desconectado manualmente
+gestorConexion.marcarDesconectado()
+
+// Limpiar almacenamiento
+gestorConexion.limpiar()
+
+// Obtener desde cualquier lado
+window.obtenerEstadoConexion()
+</div>
+
+<h2>⚠️ NOTAS IMPORTANTES</h2>
+
+<ul>
+    <li><span class="checkmark">✓</span> El almacenamiento es <code>sessionStorage</code> (se limpia al cerrar la pestaña)</li>
+    <li><span class="checkmark">✓</span> Si necesitas persistencia entre pestañas abiertas, usa <code>localStorage</code></li>
+    <li><span class="checkmark">✓</span> El timeout es de 30 minutos sin actividad</li>
+    <li><span class="checkmark">✓</span> Los módulos NO interfieren con scrips.js existente</li>
+    <li><span class="checkmark">✓</span> Compatible con todas las funciones actuales</li>
+</ul>
+
+<h2>🆘 SOLUCIÓN DE PROBLEMAS</h2>
+
+<div class="step">
+    <h3><span class="error">❌ Los indicadores no se actualizan al navegar</span></h3>
+    <p><strong>Causa:</strong> Los scripts no están cargados antes de scrips.js</p>
+    <p><strong>Solución:</strong> Asegúrate que el orden en el &lt;head&gt; sea:</p>
+    <div class="code-block">
+1. &lt;link rel="stylesheet" href="style.css"&gt;
+2. &lt;script src="modulos/gestor-conexion.js" defer&gt;
+3. &lt;script src="modulos/integracion-conexion.js" defer&gt;
+4. &lt;script src="scrips.js" defer&gt;
+    </div>
+</div>
+
+<div class="step">
+    <h3><span class="error">❌ Dice "sessionStorage no disponible"</span></h3>
+    <p><strong>Causa:</strong> Navegador en modo privado o restricción de seguridad</p>
+    <p><strong>Solución:</strong> El módulo puede seguir funcionando, solo que sin persistencia</p>
+</div>
+
+<div class="step">
+    <h3><span class="error">❌ No intenta reconectar al cambiar de página</span></h3>
+    <p><strong>Causa:</strong> Función <code>reconectarPuertoAutorizado()</code> no disponible</p>
+    <p><strong>Solución:</strong> Es normal, el módulo solo restaura el visual</p>
+</div>
+
+<h2>✅ INSTALACIÓN COMPLETADA</h2>
+
+<p>Una vez instalado, tu mano robótica se mantendrá conectada en todas las páginas sin perder el estado. El usuario podrá cambiar de sección sin que la conexión se "resetee".</p>
+
+<p style="color: #00ffff; font-weight: bold;">¡Sistema listo para usar! 🚀</p>
+
+</body>
+</html>
