@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: mano-robotica-ia
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false

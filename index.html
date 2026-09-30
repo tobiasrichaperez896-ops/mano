@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MANO ROBÓTICA // Centro de Control</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="scrips.js" defer></script>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================= -->
+    <!-- ENCABEZADO -->
+    <!-- ================================= -->
+
+    <header>
+
+        <div class="marca-header"><span class="icono-mano">♧</span><strong>MANO ROBÓTICA</strong><small>v5.5 / NEON CORE</small></div>
+        <div class="usuario-header"><span class="avatar-header" aria-hidden="true"></span><span data-usuario>visitante</span></div>
+        <div class="estado-header"><span class="pulso-enlace"></span><span data-link-status>OFFLINE</span><small>SISTEMA DE CONTROL</small></div>
+        <div class="hora-header"><strong data-reloj>--:--</strong><small data-fecha>--</small></div>
+        <a class="boton-icono" href="configuracion.html" aria-label="Abrir configuración">⚙</a>
+        <button class="boton-icono" aria-label="Pantalla completa">⛶</button>
+
+    </header>
+
+    <nav class="navegacion-ruta" aria-label="Navegación del sistema">
+        <div class="navegacion-identidad">
+            <span class="pulso-enlace"></span>
+            <span>LINK <strong data-link-status>OFFLINE</strong></span>
+        </div>
+        <div class="navegacion-enlaces">
+            <a class="enlace-ruta activo" data-ruta="control" href="index.html"><span>⌂</span> Inicio</a>
+            <a class="enlace-ruta" data-ruta="mano" href="botones.html"><span>♧</span> Control de la Mano</a>
+            <a class="enlace-ruta" data-ruta="conexion" href="conexion.html"><span>◉</span> Conexión</a>
+            <a class="enlace-ruta" data-ruta="monitor" href="monitor.html"><span>⌁</span> Monitor de Sistema</a>
+            <a class="enlace-ruta" data-ruta="ia" href="ia.html"><span>✣</span> IA</a>
+            <a class="enlace-ruta" data-ruta="configuracion" href="configuracion.html"><span>⚙</span> Configuración</a>
+        </div>
+    </nav>
+
+    <section id="dashboard-centro" data-vista="control">
+        <div class="bienvenida-dashboard">
+            <span class="avatar-usuario" aria-hidden="true"></span>
+            <span class="eyebrow">NEON CORE / OPERATIVE CONSOLE</span>
+            <h2>Bienvenido, <span data-usuario>visitante</span></h2>
+            <p>Tu asistente de control para la mano robótica.</p>
+            <div class="estado-dashboard"><span class="pulso-enlace"></span><strong data-dashboard-status>Sistema desconectado</strong><small>Conecta tu dispositivo para comenzar</small></div>
+        </div>
+        <div class="mano-holografica" aria-label="Visualización holográfica de mano robótica">
+            <div class="marco-holograma"></div>
+            <svg viewBox="0 0 260 330" role="img" aria-hidden="true">
+                <g class="mano-linea">
+                    <path d="M106 288 C95 254 91 222 93 185 L96 86 C97 73 114 72 116 86 L119 163 L122 44 C124 29 142 30 143 45 L145 160 L151 25 C153 10 171 12 171 28 L170 166 L180 51 C182 37 199 40 198 55 L190 188 C211 166 225 177 218 193 L191 242 C184 261 179 280 178 298"/>
+                    <path d="M97 188 L64 147 C55 134 42 144 49 157 L82 208 C74 218 77 235 88 241 L101 248"/>
+                    <path d="M117 210 C132 221 154 224 177 211 M101 246 C121 259 153 259 179 245 M95 282 C120 294 151 296 180 284"/>
+                    <circle cx="130" cy="273" r="9"/><circle cx="161" cy="273" r="9"/><circle cx="145" cy="245" r="7"/>
+                </g>
+                <g class="mano-nodos"><circle cx="116" cy="160" r="3"/><circle cx="145" cy="160" r="3"/><circle cx="170" cy="166" r="3"/><circle cx="190" cy="188" r="3"/><circle cx="83" cy="208" r="3"/></g>
+            </svg>
+            <span class="holograma-etiqueta">R-05 / READY</span>
+        </div>
+        <div class="gestos-rapidos">
+            <span>GESTOS RÁPIDOS</span>
+            <button class="boton-comando" data-comando="abre la mano">✋ Abrir mano</button>
+            <button class="boton-comando" data-comando="cierra la mano">✊ Cerrar mano</button>
+            <button class="boton-comando" data-comando="abre el dedo pulgar">♧ Pulgar arriba</button>
+            <button class="boton-comando" data-comando="cierra el dedo pulgar">♧ Pulgar abajo</button>
+            <button class="boton-comando" data-comando="abre el dedo índice">☝ Índice arriba</button>
+            <button class="boton-comando" data-comando="cierra el dedo índice">☝ Índice abajo</button>
+            <button class="boton-comando" data-comando="cierra la mano">✊ Puño</button>
+            <button class="boton-comando" data-comando="posicion inicial">◌ Posición de descanso</button>
+        </div>
+        <section id="estado-mano" data-vista="control">
+            <h2>Estado de la Mano</h2>
+            <p id="estado-pulgar">Pulgar: ❔ Desconocido</p>
+            <p id="estado-indice">Índice: ❔ Desconocido</p>
+            <p id="estado-medio">Medio: ❔ Desconocido</p>
+            <p id="estado-anular">Anular: ❔ Desconocido</p>
+            <p id="estado-menique">Meñique: ❔ Desconocido</p>
+            <p id="estado-muneca">Muñeca: ❔ Desconocida</p>
+        </section>
+        <section id="modos-dashboard" data-vista="control">
+            <div class="modos-dashboard-cabecera"><span>MODOS DISPONIBLES</span><small>Selecciona un módulo para continuar</small></div>
+            <div class="modos-dashboard-grid">
+                <a href="botones.html"><span>♧</span><strong>Control de mano</strong><small>Gestos y dedos</small></a>
+                <a href="audio.html"><span>◉</span><strong>Audio</strong><small>Control por voz</small></a>
+                <a href="comandos.html"><span>⌘</span><strong>Escribir</strong><small>Comandos naturales</small></a>
+                <a href="secuencias.html"><span>◌</span><strong>Secuencias</strong><small>Rutinas programadas</small></a>
+            </div>
+        </section>
+    </section>
+
+    <section id="assistant-dashboard" data-vista="control">
+        <div class="cabecera-mini"><span>✣</span><div><h2>Asistente IA</h2><p>Control conversacional</p></div><strong>● EN LÍNEA</strong></div>
+        <div id="historial-chat"><p class="mensaje-chat mensaje-sistema">Sistema: canal IA listo para recibir instrucciones.</p></div>
+        <div class="chat-dashboard-form"><input type="text" id="entrada-chat" placeholder="Escribe o pregunta lo que necesites..." autocomplete="off"><button id="boton-chat" aria-label="Enviar mensaje">➤</button><button id="boton-voz-chat" aria-label="Hablar con IA">◉</button></div>
+    </section>
+
+    <div id="modal-nombre" class="modal-consola modal-nombre" hidden>
+        <div class="modal-contenido" role="dialog" aria-modal="true" aria-labelledby="titulo-nombre">
+            <span class="modal-kicker">NEON CORE / IDENTITY HANDSHAKE</span>
+            <h2 id="titulo-nombre">¿Cómo te llamamos?</h2>
+            <p>Personaliza tu consola para que la IA te reconozca en cada sesión.</p>
+            <form id="formulario-nombre">
+                <label for="entrada-nombre">Tu nombre</label>
+                <input id="entrada-nombre" type="text" maxlength="32" autocomplete="name" placeholder="Escribe tu nombre" required>
+                <button type="submit">Entrar a la consola</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <!-- ================================= -->
+    <!-- MENÚ PRINCIPAL -->
+    <!-- ================================= -->
+
+    <section id="menu-principal" data-vista="control">
+
+        <h2>🎛️ Elige el Modo de Control</h2>
+
+        <div class="menu-modos">
+
+            <button id="modo-botones">
+                🎮 Botones
+            </button>
+
+            <button id="modo-audio">
+                🎤 Audio
+            </button>
+
+            <button id="modo-escribir">
+                ✍️ Escribir
+            </button>
+
+            <button id="modo-secuencias">
+                🧪 Secuencias
+            </button>
+
+            <button id="modo-ia">
+                🤖 Modo IA
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- MODO IA -->
+    <!-- ================================= -->
+
+  
+    <!-- ================================= -->
+    <!-- MODO BOTONES -->
+    <!-- ================================= -->
+
+    <section
+        id="panel-botones"
+        data-vista="mano"
+        hidden
+    >
+
+        <button class="boton-volver">
+            ↩️ Volver al Menú
+        </button>
+
+        <h2>🎮 Control por Botones</h2>
+
+
+        <section class="grupo-control">
+
+            <h3>🖐️ Mano</h3>
+
+            <button
+                class="boton-comando"
+                data-comando="abre la mano"
+            >
+                Abrir Mano
+            </button>
+
+            <button
+                class="boton-comando"
+                data-comando="cierra la mano"
+            >
+                Cerrar Mano
+            </button>
+
+        </section>
+
+
+
+        <section class="grupo-control">
+
+            <h3>☝️ Dedos</h3>
+
+
+            <div class="dedo">
+
+                <h4>Pulgar</h4>
+
+                <button
+                    class="boton-comando"
+                    data-comando="abre el dedo pulgar"
+                >
+                    Abrir
+                </button>
+
+                <button
+                    class="boton-comando"
+                    data-comando="cierra el dedo pulgar"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+
+
+            <div class="dedo">
+
+                <h4>Índice</h4>
+
+                <button
+                    class="boton-comando"
+                    data-comando="abre el dedo índice"
+                >
+                    Abrir
+                </button>
+
+                <button
+                    class="boton-comando"
+                    data-comando="cierra el dedo índice"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+
+
+            <div class="dedo">
+
+                <h4>Medio</h4>
+
+                <button
+                    class="boton-comando"
+                    data-comando="abre el dedo medio"
+                >
+                    Abrir
+                </button>
+
+                <button
+                    class="boton-comando"
+                    data-comando="cierra el dedo medio"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+
+
+            <div class="dedo">
+
+                <h4>Anular</h4>
+
+                <button
+                    class="boton-comando"
+                    data-comando="abre el dedo anular"
+                >
+                    Abrir
+                </button>
+
+                <button
+                    class="boton-comando"
+                    data-comando="cierra el dedo anular"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+
+
+            <div class="dedo">
+
+                <h4>Meñique</h4>
+
+                <button
+                    class="boton-comando"
+                    data-comando="abre el dedo meñique"
+                >
+                    Abrir
+                </button>
+
+                <button
+                    class="boton-comando"
+                    data-comando="cierra el dedo meñique"
+                >
+                    Cerrar
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="grupo-control">
+
+            <h3>↔️ Muñeca</h3>
+
+            <button
+                class="boton-comando"
+                data-comando="mueve la muñeca a la izquierda"
+            >
+                ← Izquierda
+            </button>
+
+            <button
+                class="boton-comando"
+                data-comando="mueve la muñeca al centro"
+            >
+                ⦿ Centro
+            </button>
+
+            <button
+                class="boton-comando"
+                data-comando="mueve la muñeca a la derecha"
+            >
+                Derecha →
+            </button>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- MODO AUDIO -->
+    <!-- ================================= -->
+
+    <section
+        id="panel-audio"
+        data-vista="audio"
+        hidden
+    >
+
+        <button class="boton-volver">
+            ↩️ Volver al Menú
+        </button>
+
+        <h2>🎤 Control por Audio</h2>
+
+        <button id="boton-microfono">
+            🎤 Activar Micrófono
+        </button>
+
+        <button
+            id="boton-detener-microfono"
+            disabled
+        >
+            ⏹️ Detener
+        </button>
+
+        <p id="estado-microfono">
+            Estado: Micrófono Apagado
+        </p>
+
+
+        <div id="resultado-voz">
+
+            <h3>🎧 Lo que escuché</h3>
+
+            <p id="texto-voz">
+                Ninguno
+            </p>
+
+
+            <h3>🧹 Texto corregido</h3>
+
+            <p id="texto-corregido">
+                Ninguno
+            </p>
+
+
+            <h3>🧠 Interpretación</h3>
+
+            <p id="interpretacion-voz">
+                Ninguna
+            </p>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- MODO ESCRIBIR -->
+    <!-- ================================= -->
+
+    <section
+        id="panel-escribir"
+        data-vista="escribir"
+        hidden
+    >
+
+        <button class="boton-volver">
+            ↩️ Volver al Menú
+        </button>
+
+        <h2>🧠 Intérprete de Comandos</h2>
+
+        <input
+            type="text"
+            id="entrada-comando"
+            placeholder="Escribe lo que quieres que haga..."
+        >
+
+        <button id="boton-enviar-texto">
+            ▶️ Ejecutar
+        </button>
+
+        <p>
+            Puedes escribir comandos simples o frases más naturales.
+        </p>
+
+        <p>
+            Ejemplo:
+            "Che, cerrá la mano y dejá abierto el pulgar."
+        </p>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- SECUENCIAS -->
+    <!-- ================================= -->
+
+    <section
+        id="panel-secuencias"
+        data-vista="secuencias"
+        hidden
+    >
+
+        <button class="boton-volver">
+            ↩️ Volver al Menú
+        </button>
+
+        <h2>🧪 Secuencias</h2>
+
+
+        <section class="secuencia">
+
+            <h3>🔄 Secuencia 1 — Movimiento Básico</h3>
+
+            <button id="secuencia-1">
+                ▶️ Ejecutar
+            </button>
+
+        </section>
+
+
+        <section class="secuencia">
+
+            <h3>✋ Secuencia 2 — Prueba de Dedos</h3>
+
+            <button id="secuencia-2">
+                ▶️ Ejecutar
+            </button>
+
+        </section>
+
+
+        <section class="secuencia">
+
+            <h3>🤖 Secuencia 3 — Prueba Completa</h3>
+
+            <button id="secuencia-3">
+                ▶️ Ejecutar
+            </button>
+
+        </section>
+
+
+        <section id="control-secuencia">
+
+            <h3>⚙️ Control</h3>
+
+            <label>
+
+                <input
+                    type="checkbox"
+                    id="bucle-secuencia"
+                >
+
+                🔁 Repetir automáticamente
+
+            </label>
+
+            <br><br>
+
+            <button id="boton-finalizar-secuencia">
+                ⏹️ Finalizar y volver a posición inicial
+            </button>
+
+            <p id="estado-secuencia">
+                Estado: Ninguna secuencia en ejecución
+            </p>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- ESTADO LÓGICO -->
+    <!-- ================================= -->
+
+    <!-- ================================= -->
+    <!-- MONITOR SERIAL -->
+    <!-- ================================= -->
+
+    <section id="monitor-serial" data-vista="control">
+
+        <h2>📟 Monitor Serial</h2>
+
+        <div id="monitor">
+
+            <p>
+                🟢 Sistema listo...
+            </p>
+
+        </div>
+
+        <button id="boton-ver-monitor">
+            🔍 Ver Monitor Completo
+        </button>
+
+    </section>
+
+
+
+    <!-- ================================= -->
+    <!-- MONITOR COMPLETO -->
+    <!-- ================================= -->
+
+    <section
+        id="panel-monitor-completo"
+        data-vista="monitor"
+        hidden
+    >
+
+        <button class="boton-volver">
+            ↩️ Volver
+        </button>
+
+        <h2>📜 Historial del Monitor</h2>
+
+        <div id="historial-monitor">
+
+            <p>
+                🟢 Sistema listo...
+            </p>
+
+        </div>
+
+        <button id="boton-limpiar-monitor">
+            🗑️ Limpiar Historial
+        </button>
+
+    </section>
+
+    <div id="modal-conexion" class="modal-consola" hidden>
+        <div class="modal-contenido" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-conexion">
+            <span class="modal-kicker">SECURE HARDWARE LINK / 01</span>
+            <h2 id="titulo-modal-conexion">Inicializar enlace</h2>
+            <p>La consola buscará un puerto USB autorizado para tomar el control de la mano robótica.</p>
+            <div class="modal-acciones">
+                <button data-cerrar-modal>Cancelar</button>
+                <button id="boton-confirmar-conexion">Buscar dispositivo</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>

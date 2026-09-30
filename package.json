@@ -1,0 +1,13 @@
+{
+  "name": "mano-robotica-ia",
+  "version": "3.9.5",
+  "private": true,
+  "description": "Servidor seguro para el modo IA de la mano robotica",
+  "scripts": {
+    "start": "node servidor.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "openai": "^7.5.0"
+  }
+}

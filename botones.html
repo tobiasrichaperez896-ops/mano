@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORBITAL // Control de Mano</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="scrips.js" defer></script>
+</head>
+<body data-ruta-inicial="mano">
+<header><div class="eyebrow">ORBITAL CONTROL NETWORK // HAND MODULE</div><h1>CONTROL <span>MANUAL</span></h1><p>Manipulación individual y gestos biomecánicos <strong>R-05</strong></p></header>
+<nav class="navegacion-ruta" aria-label="Navegación del sistema"><div class="navegacion-identidad"><span class="pulso-enlace"></span><span>LINK <strong data-link-status>OFFLINE</strong></span></div><div class="navegacion-enlaces"><a class="enlace-ruta" href="index.html"><span>⌂</span> Inicio</a><a class="enlace-ruta activo" data-ruta="mano" href="botones.html"><span>♧</span> Control de la Mano</a><a class="enlace-ruta" href="conexion.html"><span>◉</span> Conexión</a><a class="enlace-ruta" href="monitor.html"><span>⌁</span> Monitor de Sistema</a><a class="enlace-ruta" href="ia.html"><span>✣</span> IA</a><a class="enlace-ruta" href="configuracion.html"><span>⚙</span> Configuración</a></div></nav>
+<main class="layout-pagina">
+<aside class="rail-operativo">
+<section id="conexion"><h2>Enlace</h2><button id="boton-conectar">Conectar mano</button><button id="boton-desconectar" disabled>Desconectar</button><div id="informacion-conexion"><p id="estado-conexion">Estado: 🔴 Desconectado</p><p id="conexion-usb">USB: ⚪ No detectado</p><p id="puerto-seleccionado">Puerto: Ninguno</p></div></section>
+<section id="estado-mano"><h2>Estado vivo</h2><p id="estado-pulgar">Pulgar: ❔ Desconocido</p><p id="estado-indice">Índice: ❔ Desconocido</p><p id="estado-medio">Medio: ❔ Desconocido</p><p id="estado-anular">Anular: ❔ Desconocido</p><p id="estado-menique">Meñique: ❔ Desconocido</p><p id="estado-muneca">Muñeca: ❔ Desconocida</p></section>
+<section id="monitor-serial"><h2>Telemetría</h2><div id="monitor"><p>🟢 Módulo listo...</p></div></section>
+</aside>
+<section id="panel-botones" data-vista="mano" class="modulo"><button class="boton-volver">← Dashboard</button><h2>Control por botones</h2><section class="grupo-control"><h3>Mano completa</h3><button class="boton-comando" data-comando="abre la mano">Abrir mano</button><button class="boton-comando" data-comando="cierra la mano">Cerrar mano</button></section><section class="grupo-control"><h3>Dedos</h3><div class="dedo"><h4>Pulgar</h4><button class="boton-comando" data-comando="abre el dedo pulgar">Abrir</button><button class="boton-comando" data-comando="cierra el dedo pulgar">Cerrar</button></div><div class="dedo"><h4>Índice</h4><button class="boton-comando" data-comando="abre el dedo índice">Abrir</button><button class="boton-comando" data-comando="cierra el dedo índice">Cerrar</button></div><div class="dedo"><h4>Medio</h4><button class="boton-comando" data-comando="abre el dedo medio">Abrir</button><button class="boton-comando" data-comando="cierra el dedo medio">Cerrar</button></div><div class="dedo"><h4>Anular</h4><button class="boton-comando" data-comando="abre el dedo anular">Abrir</button><button class="boton-comando" data-comando="cierra el dedo anular">Cerrar</button></div><div class="dedo"><h4>Meñique</h4><button class="boton-comando" data-comando="abre el dedo meñique">Abrir</button><button class="boton-comando" data-comando="cierra el dedo meñique">Cerrar</button></div></section><section class="grupo-control"><h3>Muñeca</h3><button class="boton-comando" data-comando="mueve la muñeca a la izquierda">← Izquierda</button><button class="boton-comando" data-comando="mueve la muñeca al centro">⦿ Centro</button><button class="boton-comando" data-comando="mueve la muñeca a la derecha">Derecha →</button></section></section>
+</main>
+<div id="modal-conexion" class="modal-consola" hidden><div class="modal-contenido" role="dialog" aria-modal="true"><span class="modal-kicker">SECURE HARDWARE LINK / 01</span><h2>Inicializar enlace</h2><p>La consola buscará un puerto USB autorizado para tomar el control de la mano robótica.</p><div class="modal-acciones"><button data-cerrar-modal>Cancelar</button><button id="boton-confirmar-conexion">Buscar dispositivo</button></div></div></div>
+</body>
+</html>
