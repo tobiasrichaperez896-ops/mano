@@ -14,6 +14,11 @@
 
     <link rel="stylesheet" href="style.css">
 
+    <!-- MÓDULOS DE PERSISTENCIA DE CONEXIÓN (CARGAR ANTES QUE scrips.js) -->
+    <script src="modulos/gestor-conexion.js" defer></script>
+    <script src="modulos/integracion-conexion.js" defer></script>
+
+    <!-- SCRIPT PRINCIPAL -->
     <script src="scrips.js" defer></script>
 
 </head>
@@ -64,12 +69,12 @@
             <div class="marco-holograma"></div>
             <svg viewBox="0 0 260 330" role="img" aria-hidden="true">
                 <g class="mano-linea">
-                    <path d="M106 288 C95 254 91 222 93 185 L96 86 C97 73 114 72 116 86 L119 163 L122 44 C124 29 142 30 143 45 L145 160 L151 25 C153 10 171 12 171 28 L170 166 L180 51 C182 37 199 40 198 55 L190 188 C211 166 225 177 218 193 L191 242 C184 261 179 280 178 298"/>
+                    <path d="M106 288 C95 254 91 222 93 185 L96 86 C97 73 114 72 116 86 L119 163 L122 44 C124 29 142 30 143 45 L145 160 L151 25 C153 10 171 12 171 28 L170 166 L180 51 C182 37 199 4[...]
                     <path d="M97 188 L64 147 C55 134 42 144 49 157 L82 208 C74 218 77 235 88 241 L101 248"/>
                     <path d="M117 210 C132 221 154 224 177 211 M101 246 C121 259 153 259 179 245 M95 282 C120 294 151 296 180 284"/>
                     <circle cx="130" cy="273" r="9"/><circle cx="161" cy="273" r="9"/><circle cx="145" cy="245" r="7"/>
                 </g>
-                <g class="mano-nodos"><circle cx="116" cy="160" r="3"/><circle cx="145" cy="160" r="3"/><circle cx="170" cy="166" r="3"/><circle cx="190" cy="188" r="3"/><circle cx="83" cy="208" r="3"/></g>
+                <g class="mano-nodos"><circle cx="116" cy="160" r="3"/><circle cx="145" cy="160" r="3"/><circle cx="170" cy="166" r="3"/><circle cx="190" cy="188" r="3"/><circle cx="83" cy="208" r[...]
             </svg>
             <span class="holograma-etiqueta">R-05 / READY</span>
         </div>
@@ -107,7 +112,7 @@
     <section id="assistant-dashboard" data-vista="control">
         <div class="cabecera-mini"><span>✣</span><div><h2>Asistente IA</h2><p>Control conversacional</p></div><strong>● EN LÍNEA</strong></div>
         <div id="historial-chat"><p class="mensaje-chat mensaje-sistema">Sistema: canal IA listo para recibir instrucciones.</p></div>
-        <div class="chat-dashboard-form"><input type="text" id="entrada-chat" placeholder="Escribe o pregunta lo que necesites..." autocomplete="off"><button id="boton-chat" aria-label="Enviar mensaje">➤</button><button id="boton-voz-chat" aria-label="Hablar con IA">◉</button></div>
+        <div class="chat-dashboard-form"><input type="text" id="entrada-chat" placeholder="Escribe o pregunta lo que necesites..." autocomplete="off"><button id="boton-chat" aria-label="Enviar me[...]
     </section>
 
     <div id="modal-nombre" class="modal-consola modal-nombre" hidden>
